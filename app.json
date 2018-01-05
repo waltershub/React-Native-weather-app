@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "weathe-app",
+    "description": "This project is really great.",
+    "slug": "weathe-app",
+    "privacy": "public",
+    "sdkVersion": "24.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/images/giphy-downsized.gif",
+      "resizeMode": "contain",
+      "backgroundColor": "rgb(243,181,18)"
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
