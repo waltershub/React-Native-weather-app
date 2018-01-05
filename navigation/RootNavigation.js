@@ -4,11 +4,15 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import Main from '../screens/main.js';
+import dayList from '../screens/day-list.js';
 
 const RootStackNavigator = StackNavigator(
   {
     Main: {
       screen: Main,
+    },
+    dayList: {
+      screen: dayList,
     },
   },
   {

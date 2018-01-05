@@ -5,6 +5,7 @@ import config from '../config/config.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 //import AutoComplete from '../components/autocomplete.js';
 import { SearchBar, Icon, Button } from 'react-native-elements';
+import axios from 'axios';
 
 export default class Main extends React.Component {
   constructor() {
@@ -19,6 +20,9 @@ export default class Main extends React.Component {
     };
 
     this.useCity = this.useCity.bind(this);
+    this.gotToDayLIst = this.gotToDayLIst.bind(this);
+    this.goToDayListByCity = this.goToDayListByCity.bind(this);
+    this.goToDayLIstBylatlon = this.goToDayLIstBylatlon.bind(this);
   }
   componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -43,7 +47,42 @@ export default class Main extends React.Component {
       this.setState({ icon: 'edit-location' });
     }
   }
+  gotToDayLIst() {
+    if (this.state.submitButton === 'use your location') {
+      this.goToDayLIstBylatlon();
+    } else {
+      this.goToDayListByCity();
+    }
+  }
+  goToDayListByCity() {
+    axios
+      .get(
+        `http://maps.googleapis.com/maps/api/geocode/json?address=${
+          this.state.locationCity
+        }&sensor=false`
+      )
+      .then(response => {
+        console.log(response.data.results[0]['geometry']);
+        const url = `https://api.darksky.net/forecast/${config.darkSkyKey}/${
+          response.data.results[0]['geometry'].location.lat
+        },${response.data.results[0]['geometry'].location.lng}`;
 
+        console.log(url);
+        axios.get(url).then(response => {
+          this.props.navigation.navigate('dayList', { weather: response.data });
+        });
+      });
+  }
+  goToDayLIstBylatlon() {
+    const url = `https://api.darksky.net/forecast/${config.darkSkyKey}/${
+      this.state.locationCoords.longitude
+    },${this.state.locationCoords.latitude}`;
+
+    console.log(this.state.locationCoords);
+    axios.get(url).then(response => {
+      this.props.navigation.navigate('dayList', { weather: response.data });
+    });
+  }
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -52,12 +91,11 @@ export default class Main extends React.Component {
       });
     }
 
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
+    let locationCoords = await Location.getCurrentPositionAsync({});
+    this.setState({ locationCoords: locationCoords.coords });
   };
 
   render() {
-    console.log(this.state.location, config);
     return (
       <View style={styles.container}>
         <View style={{ paddingTop: 300 }}>
@@ -75,6 +113,7 @@ export default class Main extends React.Component {
             raised
             icon={{ name: this.state.icon }}
             title={this.state.submitButton}
+            onPress={this.gotToDayLIst}
           />
         </View>
       </View>
