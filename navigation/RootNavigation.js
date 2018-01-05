@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 
 import Main from '../screens/main.js';
 import dayList from '../screens/day-list.js';
+import Detailed from '../screens/detailed.js';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -13,6 +14,9 @@ const RootStackNavigator = StackNavigator(
     },
     dayList: {
       screen: dayList,
+    },
+    detailed: {
+      screen: Detailed,
     },
   },
   {

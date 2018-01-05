@@ -44,6 +44,7 @@ export default class Daylist extends React.Component {
               day={moment(day.time * 1000).format('dddd')}
               weather={day}
               img={images[day.icon]}
+              navigate={this.props.navigation.navigate}
             />
           ))}
         </ScrollView>

@@ -4,11 +4,23 @@ import { Constants, Location, Permissions } from 'expo';
 import { Container, Content, Thumbnail } from 'native-base';
 
 export default class DayItem extends React.Component {
+  constructor() {
+    super();
+    this.toDetailedView = this.toDetailedView.bind(this);
+  }
+
+  toDetailedView() {
+    this.props.navigate('detailed', {
+      img: this.props.img,
+      weather: this.props.weather,
+      day: this.props.day,
+    });
+  }
   render() {
     const weather = this.props.weather;
     console.log(this.props.img);
     return (
-      <TouchableHighlight>
+      <TouchableHighlight onPress={this.toDetailedView}>
         <View style={styles.container}>
           <Image
             style={{
@@ -21,7 +33,6 @@ export default class DayItem extends React.Component {
             }}
             source={this.props.img}
           />
-          <Thumbnail source={this.props.img} />
           <Text>
             {this.props.day}
             {'\n'}
