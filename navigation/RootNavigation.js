@@ -18,9 +18,9 @@ const RootStackNavigator = StackNavigator(
   {
     navigationOptions: () => ({
       headerStyle: {
-        backgroundColor: 'rgb(0,0,139)',
+        backgroundColor: '#000000)',
         height: 5,
-        borderBottomColor: 'rgb(0,0,139)',
+        borderBottomColor: '#000000',
       },
       statusBarStyle: 'light-content',
     }),

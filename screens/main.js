@@ -1,11 +1,21 @@
 import React from 'react';
-import { Platform, Text, View, StyleSheet, TextInput, ScrollView } from 'react-native';
+import {
+  Platform,
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Image,
+  StatusBar,
+} from 'react-native';
 import { Constants, Location, Permissions } from 'expo';
 import config from '../config/config.js';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 //import AutoComplete from '../components/autocomplete.js';
 import { SearchBar, Icon, Button } from 'react-native-elements';
 import axios from 'axios';
+const backround = require('../assets/images/backround3.gif');
 
 export default class Main extends React.Component {
   constructor() {
@@ -97,7 +107,18 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{ backgroundColor: '#00000', flex: 1 }}>
+        <StatusBar backgroundColor="blue" barStyle="light-content" />
+        <Image
+          style={{
+            flex: 1,
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+          }}
+          source={backround}
+        />
         <View style={{ paddingTop: 300 }}>
           <SearchBar
             containerStlye={{ borderWidth: 0 }}
