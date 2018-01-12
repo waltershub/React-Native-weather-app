@@ -85,13 +85,19 @@ export default class Main extends React.Component {
   }
   goToDayLIstBylatlon() {
     const url = `https://api.darksky.net/forecast/${config.darkSkyKey}/${
-      this.state.locationCoords.longitude
-    },${this.state.locationCoords.latitude}`;
-
+      this.state.locationCoords.latitude
+    },${this.state.locationCoords.longitude}`;
+    console.log(url);
     console.log(this.state.locationCoords);
-    axios.get(url).then(response => {
-      this.props.navigation.navigate('dayList', { weather: response.data });
-    });
+    axios
+      .get(url)
+      .then(response => {
+        console.log('here', url);
+        this.props.navigation.navigate('dayList', { weather: response.data });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
